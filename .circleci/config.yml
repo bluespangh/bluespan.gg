@@ -25,6 +25,10 @@ jobs:
             apt update
             apt install -y rsync
 
+            cat << EOF >> ~/.ssh/known_hosts
+            direct.bluespan.gg,2001:19f0:6401:56d:5400:2ff:fe66:c84a,149.28.246.77 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBMQcW5qmyq2ak4aRYHM5PuhhqEooaAJndaZ29XyQmHSeYP8wzrvel6i1ybyN8R/QxfeOcT3PvA2OIFTjYxuT10=
+            EOF
+
             rsync \
               --rsync-path=/usr/bin/openrsync \
               --delete -arv \
