@@ -2,7 +2,7 @@ version: 2
 
 jobs:
   build:
-    working_directory: ~/build
+    working_directory: ~/bluespan.gg
     docker:
       - image: python:3.8.0
     steps:
@@ -16,3 +16,17 @@ jobs:
           name: render rst
           command: |
             env/bin/python build.py
+      - add_ssh_keys:
+          fingerprints:
+            - "af:fe:e4:34:8a:1a:7d:e4:78:24:0e:fe:fa:ab:39:3b"
+      - run:
+          name: deploy to bluespan.gg
+          command: |
+            apt update
+            apt install -y rsync
+
+            rsync \
+              --rsync-path=/usr/bin/openrsync \
+              --delete -arv \
+              ./build/ \
+              root@direct.bluespan.gg:/var/www/htdocs/bluespan.gg
